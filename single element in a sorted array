@@ -1,0 +1,26 @@
+class Solution {
+    public int singleNonDuplicate(int[] nums){ 
+        int low = 0;
+        int high = nums.length - 1;
+
+        while (low < high) {
+            int mid = (low + high) / 2;
+
+            // make mid even index
+            if (mid % 2 == 1) {
+                mid--;
+            }
+
+            // check pair
+            if (nums[mid] == nums[mid + 1]) {
+                // correct pair → move right side
+                low = mid + 2;
+            } else {
+                // mismatch → move left side
+                high = mid;
+            }
+        }
+
+        return nums[low];
+    }
+}
