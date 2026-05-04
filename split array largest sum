@@ -1,0 +1,42 @@
+class Solution {
+    public int splitArray(int[] nums, int k) {
+        int low = 0;
+        int high = 0;
+
+        // low = max element, high = sum
+        for (int num : nums) {
+            low = Math.max(low, num);
+            high += num;
+        }
+
+        // binary search
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+
+            if (canSplit(nums, k, mid)) {
+                high = mid; // try smaller
+            } else {
+                low = mid + 1; // need bigger sum
+            }
+        }
+
+        return low;
+    }
+
+    // check function
+    private boolean canSplit(int[] nums, int k, int mid) {
+        int groups = 1;
+        int sum = 0;
+
+        for (int num : nums) {
+            if (sum + num > mid) {
+                groups++;       // new group
+                sum = num;      // start fresh
+            } else {
+                sum += num;
+            }
+        }
+
+        return groups <= k;
+    }
+}
