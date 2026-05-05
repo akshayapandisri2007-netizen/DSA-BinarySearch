@@ -1,0 +1,49 @@
+class Solution {
+    public int maximumCount(int[] nums) {
+        int n = nums.length;
+
+        int firstPositive = firstGreaterThanZero(nums);
+        int lastNegative = lastLessThanZero(nums);
+
+        int positiveCount = n - firstPositive;
+        int negativeCount = lastNegative + 1;
+
+        return Math.max(positiveCount, negativeCount);
+    }
+
+    // first index where element > 0
+    public int firstGreaterThanZero(int[] nums) {
+        int low = 0, high = nums.length - 1;
+        int ans = nums.length;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            if (nums[mid] > 0) {
+                ans = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
+
+    // last index where element < 0
+    public int lastLessThanZero(int[] nums) {
+        int low = 0, high = nums.length - 1;
+        int ans = -1;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            if (nums[mid] < 0) {
+                ans = mid;
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
